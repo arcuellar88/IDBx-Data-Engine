@@ -14,11 +14,11 @@ CREATE TABLE STG.KIC_STG_MOOCS_USER (
   LAST_LOGIN DATETIME(6),
   DATE_JOINED DATETIME(6),
   STG_EXT_TS TIMESTAMP(6),
-TRAN_TYP VARCHAR(10)
+  TRAN_TYP VARCHAR(10)
 ) ENGINE=INNODB DEFAULT CHARSET=UTF8 COLLATE=UTF8_UNICODE_CI;
 
 -- ------------------------------------------------------
---  DDL for Table STG.KIC_MOOCS_USERPROFILE / auth_userprofile
+--  DDL for Table STG.KIC_STG_MOOCS_USERPROFILE / auth_userprofile
 -- ------------------------------------------------------
 CREATE TABLE STG.KIC_STG_MOOCS_USERPROFILE (
   ID INT(11),
@@ -48,8 +48,8 @@ CREATE TABLE STG.KIC_STG_MOOCS_CERTIFICATES
   DOWNLOAD_URL VARCHAR(128),
   GRADE DOUBLE,
   COURSE_ID VARCHAR(255),
-  KEY VARCHAR(32),
-  STATUS VARCHAR(32),
+  KEYV VARCHAR(32),
+  STATUSV VARCHAR(32),
   VERIFY_UUID VARCHAR(32),
   DOWNLOAD_UUID VARCHAR(32),
   NAME VARCHAR(255),
@@ -63,7 +63,7 @@ CREATE TABLE STG.KIC_STG_MOOCS_CERTIFICATES
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ------------------------------------------------------
---  DDL for Table STG.KIC_STG_MOOCS_USERPROFILE / courseware_studentmodule
+--  DDL for Table STG.KIC_STG_MOOCS_CW_STUDENTMODULE / courseware_studentmodule
 -- ------------------------------------------------------
 
 CREATE TABLE STG.KIC_STG_MOOCS_CW_STUDENTMODULE
@@ -71,6 +71,7 @@ CREATE TABLE STG.KIC_STG_MOOCS_CW_STUDENTMODULE
   ID INT(11) ,
   MODULE_TYPE VARCHAR(32),
   MODULE_ID VARCHAR(255),
+  STATE VARCHAR(5),
   GRADE DOUBLE,
   CREATED DATETIME(6),
   MODIFIED DATETIME(6),
@@ -83,7 +84,7 @@ CREATE TABLE STG.KIC_STG_MOOCS_CW_STUDENTMODULE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ------------------------------------------------------
---  DDL for Table STG.KIC_STG_MOOCS_USERPROFILE / grades_persistentcoursegrade
+--  DDL for Table STG.KIC_STG_MOOCS_COURSEGRADE / grades_persistentcoursegrade
 -- ------------------------------------------------------
 
 CREATE TABLE STG.KIC_STG_MOOCS_COURSEGRADE (
@@ -101,7 +102,7 @@ CREATE TABLE STG.KIC_STG_MOOCS_COURSEGRADE (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ------------------------------------------------------
---  DDL for Table STG.KIC_STG_MOOCS_USERPROFILE / grades_persistentsubsectiongrade
+--  DDL for Table STG.KIC_STG_MOOCS_SUBSECTIONGRADE / grades_persistentsubsectiongrade
 -- ------------------------------------------------------
 
 CREATE TABLE STG.KIC_STG_MOOCS_SUBSECTIONGRADE (
@@ -147,7 +148,7 @@ CREATE TABLE STG.KIC_STG_MOOCS_STUDENTROLE (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ------------------------------------------------------
---  DDL for Table STG.KIC_STG_MOOCS_ANONYMOUSUSERID / student_courseenrollment
+--  DDL for Table STG.KIC_STG_MOOCS_ENROLLMENT / student_courseenrollment
 -- ------------------------------------------------------
 
 CREATE TABLE STG.KIC_STG_MOOCS_ENROLLMENT (
@@ -184,18 +185,21 @@ CREATE TABLE STG.KIC_STG_MOOCS_USER_TO_ID (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ------------------------------------------------------
---  DDL for Table STG.KIC_STG_MOOCS_USER_TO_ID / metadata_cursos.csv
+--  DDL for Table STG.KIC_STG_MOOCS_COURSES / metadata_cursos.csv
 -- ------------------------------------------------------
+DROP TABLE IF EXISTS STG.KIC_STG_MOOCS_COURSES;
+
 CREATE TABLE STG.KIC_STG_MOOCS_COURSES (
-  ID INT(11),
+  ID VARCHAR(50),
   STUDIO_ID VARCHAR(50),
+  STUDIO_ID2 VARCHAR(50),
   NAME VARCHAR(255),
   SME VARCHAR(50),
   START_DATE DATETIME,
   END_DATE DATETIME,
   STG_EXT_TS TIMESTAMP(6),
   TRAN_TYP VARCHAR(10)
-) ENGINE=InnoDB CHARSET=utf8mb4 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ------------------------------------------------------
 --  DDL for Table STG.KIC_STG_MOOCS_USER_LOCATION /user_location.csv
@@ -211,7 +215,7 @@ CREATE TABLE STG.KIC_STG_MOOCS_USER_LOCATION (
   IP_LONGITUDE VARCHAR(100),
   IP_POSTAL_CODE VARCHAR(100),
   IP_SUBDIVISION_NAME VARCHAR(100),
-  STG_EXT_TS TIMESTAMP(6),
+  STG_EXT_TS TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6),
   TRAN_TYP VARCHAR(10)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
