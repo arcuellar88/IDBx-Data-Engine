@@ -1,5 +1,5 @@
 -- ------------------------------------------------------
---  DDL for Table STG.KIC_STG_MOOCS_USER / stg_auth_user
+--  DDL for Table STG.KIC_STG_MOOCS_USER / auth_user
 -- ------------------------------------------------------
 CREATE TABLE STG.KIC_STG_MOOCS_USER (
   ID INT(11),

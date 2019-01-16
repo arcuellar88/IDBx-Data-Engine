@@ -304,7 +304,7 @@ ID
 TRUNCATE TABLE STG.KIC_STG_MOOCS_USER_LOCATION;
 
 LOAD DATA LOCAL INFILE
-'/Users/alejandrorodriguez/Documents/3_Trabajo/GalapagoL/IDBx-Data-Engine/sample_data/user_location.csv'
+'/Users/alejandrorodriguez/Documents/3_Trabajo/GalapagoL/IDBx-Data-Engine/sample_data/ip_user_final.csv'
 IGNORE
 INTO TABLE STG.KIC_STG_MOOCS_USER_LOCATION
 CHARACTER SET 'utf8'
@@ -312,17 +312,17 @@ FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
 IGNORE 1 ROWS
 (
-USER_ID
+IP
 ,TM
-,IP
-,IP_CITY_NAME
+,USER_ID
 ,IP_COUNTRY_ISO
 ,IP_COUNTRY_NAME
+,IP_SUBDIVISION_NAME
+,IP_CITY_NAME
+,IP_POSTAL_CODE
 ,IP_LATITUDE
 ,IP_LONGITUDE
-,IP_POSTAL_CODE
-,IP_SUBDIVISION_NAME
-)
+);
 -- ------------------------------------------------------
 --  DDL for Table STG.KIC_STG_MOOCS_IDB_LOCATION /Paises_bidENG.csv
 -- ------------------------------------------------------
@@ -344,4 +344,4 @@ PAIS
 ,REGION
 ,IDB_GROUP_CODE
 ,REGION_NM
-)
+);
