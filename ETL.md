@@ -141,8 +141,6 @@ There are two ODS tables. One is the anonymouse version of the otherone.
 |USER_ENROLL| 1 row per user enrollment in one course|
 |USER_ENROLL_ANONYM | 1 row per anonymouse user enrollment in one course|
 
-## Additional information 
-
 ## Author
 
 Alejandro Rodríguez Cuéllar
