@@ -4,7 +4,6 @@
 ## Dimensional Fact Model
 ![dfm_moocs_enrollments](https://user-images.githubusercontent.com/9292999/51250051-44e7a800-1963-11e9-8654-dd6b90dc08ee.png "Dimensional Fact Model")
 
-
 ### Dimensions
 
 Dimension| Description| 
@@ -37,13 +36,16 @@ This is the ETL process for the Phase 1 of The Moocs.
 ### 2. ETL process
 ![diagramas_flujo_edx_edw](https://user-images.githubusercontent.com/9292999/51249994-241f5280-1963-11e9-85de-6b90b723695a.png)
 
+All the source files are located in a bucket in S3. The process will do the following tasks:
+
+1. Copy the files from S3 to EDW server: DataPackage and 3 csv files (view table below)
+2. Extract (decompress) and decrypt DataPackage
+3. Load and process the Data with DataStage. 
 
 #### Data Stage ETL
 All the queries to move the data from STG to SRC to ODS are in [ETL.SQL](https://github.com/arcuellar88/IDBx-Data-Engine/blob/datastage/ETL.sql).
 
-##### STG -> SRC -> ODS tables
-
-
+##### STG and SRC tables
 <table>
     <thead>
         <tr>
@@ -126,17 +128,20 @@ All the queries to move the data from STG to SRC to ODS are in [ETL.SQL](https:/
             <td>COURSES</td>
             <td>COURSES</td>
         </tr>
-         
-        
 </table>
 
+* The DataPackage has one file per course. For example:
+*IDBx-IDB10x-T32017-*student_courseaccessrole-prod-analytics.sql
 
-#### ODS tables
+##### ODS tables
+There are two ODS tables. One is the anonymouse version of the otherone.
 
+|KIC_ODS_MOOCS|Granularity|
+|--|--|
+|USER_ENROLL| 1 row per user enrollment in one course|
+|USER_ENROLL_ANONYM | 1 row per anonymouse user enrollment in one course|
 
 ## Additional information 
-
-
 
 ## Author
 
