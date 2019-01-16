@@ -2,7 +2,7 @@
 # ETL MOOcs Phase 1
 
 ## Dimensional Fact Model
-![dfm_moocs_enrollments](https://user-images.githubusercontent.com/9292999/51250051-44e7a800-1963-11e9-8654-dd6b90dc08ee.png "Dimensional Fact Model")
+![dfm_moocs_enrollments](https://user-images.githubusercontent.com/9292999/51255749-da8a3400-1971-11e9-9d1f-5e28b7b46c70.png "Dimensional Fact Model")
 
 ### Dimensions
 
