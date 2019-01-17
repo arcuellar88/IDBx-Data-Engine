@@ -1,4 +1,3 @@
-
 TRUNCATE TABLE STG.KIC_STG_MOOCS_COURSEGRADE;
 
 LOAD DATA LOCAL INFILE
@@ -20,7 +19,7 @@ MODIFIED,
 USER_ID);
 
 -- ------------------------------------------------------
---  DDL for Table STG.KIC_STG_MOOCS_USER / stg_auth_user
+--  DDL for Table STG.KIC_STG_MOOCS_USER / auth_user
 -- ------------------------------------------------------
 TRUNCATE TABLE STG.KIC_STG_MOOCS_USER;
 
