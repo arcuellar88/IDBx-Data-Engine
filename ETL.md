@@ -6,12 +6,12 @@
 
 ### Dimensions
 
-Dimension| Description| 
+Dimension| Description|
 |---|---|
-Enrollment date| Date of the enrollment of a user in a course Hierarchy: year, month and day |	
-Course| Mooc: id, name, start and end date, SME (IDB division) and duration | 
+Enrollment date| Date of the enrollment of a user in a course Hierarchy: year, month and day |
+Course| Mooc: id, name, start and end date, SME (IDB division) and duration |
 User| All the information from the user. Age, sex, Level of education, Role, Location: ip, country, region, type of student (certified, explorer, advanced, complete or enrollment), etc.   |
-Passing date| Date when the student passed the Mooc.| 
+Passing date| Date when the student passed the Mooc.|
 
 ### Metrics
 
@@ -31,7 +31,7 @@ This is the ETL process for the Phase 1 of The Moocs.
 
 ### 1. Create Tables (DDL)
  - Create the STG tables using [STG.sql](https://github.com/arcuellar88/IDBx-Data-Engine/blob/datastage/STG.sql)
- - Create the SRC and ODS tables using [SRC.sql](https://github.com/arcuellar88/IDBx-Data-Engine/blob/datastage/SRC.sql) 
+ - Create the SRC and ODS tables using [SRC.sql](https://github.com/arcuellar88/IDBx-Data-Engine/blob/datastage/SRC.sql)
 
 ### 2. ETL process
 ![diagramas_flujo_edx_edw](https://user-images.githubusercontent.com/9292999/51249994-241f5280-1963-11e9-85de-6b90b723695a.png)
@@ -40,12 +40,11 @@ All the source files are located in a bucket in S3. The process will do the foll
 
 1. Copy the files from S3 to EDW server: DataPackage and 3 csv files (view table below)
 2. Extract (decompress) and decrypt DataPackage
-3. Load and process the Data with DataStage. 
+3. Load and process the Data with DataStage.
 
 #### Data Stage ETL
-All the queries to move the data from STG to SRC to ODS are in [ETL.SQL](https://github.com/arcuellar88/IDBx-Data-Engine/blob/datastage/ETL.sql).
 
-##### STG and SRC tables
+##### Source files, STG and SRC tables
 <table>
     <thead>
         <tr>
@@ -58,37 +57,37 @@ All the queries to move the data from STG to SRC to ODS are in [ETL.SQL](https:/
     <tbody>
         <tr>
             <td rowspan=11>DATA PACKAGE</td>
-            <td>*_student_anonymoususerid.sql</td>
+            <td>*_student_anonymoususerid-prod-ana*.sql</td>
             <td>ANONYMOUSUSERID</td>
             <td>ANONYMOUSUSERID</td>
         </tr>
         <tr>
-            <td>*_certificates_generatedcertificate.sql</td>
+            <td>*_certificates_generatedcertificate-prod-ana*.sql</td>
             <td>CERTIFICATES</td>
-            <td>CERTIFICATES</td>             
+            <td>CERTIFICATES</td>
         </tr>
         <tr>
-           <td>*_grades_persistentcoursegrade.sql</td>
+           <td>*_grades_persistentcoursegrade-prod-ana*.sql</td>
             <td>COURSEGRADE</td>
              <td>COURSEGRADE</td>
         </tr>
         <tr>
-            <td>*_courseware_studentmodule.sql</td>
+            <td>*_courseware_studentmodule-prod-ana*.sql</td>
             <td>CW_STUDENTMODULE</td>
             <td>CW_STUDENTMODULE</td>
         </tr>
         <tr>
-            <td>*_student_courseenrollment.sql</td>
+            <td>*_student_courseenrollment-prod-ana*.sql</td>
             <td>ENROLLMENT</td>
             <td>ENROLLMENT</td>
         </tr>
         <tr>
-            <td>*_student_languageproficiency.sql</td>
+            <td>*_student_languageproficiency-prod-ana*.sql</td>
             <td>STUDENTLANG</td>
             <td>STUDENTLANG</td>
         </tr>
         <tr>
-            <td>*_student_courseaccessrole</td>
+            <td>*_student_courseaccessrole-prod-ana*.sql</td>
             <td>STUDENTROLE</td>
             <td>STUDENTROLE</td>
         </tr>
@@ -98,17 +97,17 @@ All the queries to move the data from STG to SRC to ODS are in [ETL.SQL](https:/
             <td>USER_TO_ID</td>
        </tr>
         <tr>
-            <td>*_grades_persistentsubsectiongrade.sql</td>
+            <td>*_grades_persistentsubsectiongrade-prod-ana*.sql</td>
             <td>SUBSECTIONGRADE</td>
             <td>SUBSECTIONGRADE</td>
         </tr>
         <tr>
-            <td>*_auth_user.csv</td>
+            <td>*_auth_userprod-ana*.sql</td>
             <td>USER</td>
             <td>USER</td>
         </tr>
         <tr>
-            <td>*_auth_userprofile.sql</td>
+            <td>*_auth_userprofile-prod-ana*.sql</td>
             <td>USERPROFILE</td>
             <td>USERPROFILE</td>
         </tr>
@@ -130,8 +129,30 @@ All the queries to move the data from STG to SRC to ODS are in [ETL.SQL](https:/
         </tr>
 </table>
 
-* The DataPackage has one file per course. For example:
-*IDBx-IDB10x-T32017-*student_courseaccessrole-prod-analytics.sql
+
+##### CSV->STG
+The DataPackage has one file per course. For example: *IDBx-IDB10x-T32017-*student_courseaccessrole-prod-analytics.sql
+
+Please ignore (drop) all the columns found in the CSV files and not in the STG tables.
+
+For example:
+
+File:
+ *_auth_userprod-ana*.sql
+
+File columns:
+ id	username	first_name	last_name	email	password	is_staff	is_active	is_superuser
+last_login	date_joined	status	email_key	avatar_type	country	show_country	date_of_birth	interesting_tags	ignored_tags	email_tag_filter_strategy	display_tag_filter_strategy	consecutive_days_visit_count
+
+STG_USER columns:
+`ID` `USERNAME``FIRST_NAME` `LAST_NAME` `EMAIL` `PASSWORD` `IS_STAFF` `IS_ACTIVE` `IS_SUPERUSER` `LAST_LOGIN` `DATE_JOINED`
+
+Columns to ignore:
+status	email_key	avatar_type	country	show_country	date_of_birth	interesting_tags	ignored_tags	email_tag_filter_strategy	display_tag_filter_strategy	consecutive_days_visit_count
+
+
+##### STG-> SRC->ODS
+All the queries to move the data from STG to SRC to ODS are in [ETL.SQL](https://github.com/arcuellar88/IDBx-Data-Engine/blob/datastage/ETL.sql).
 
 ##### ODS tables
 There are two ODS tables. One is the anonymouse version of the otherone.
@@ -144,5 +165,3 @@ There are two ODS tables. One is the anonymouse version of the otherone.
 ## Author
 
 Alejandro Rodríguez Cuéllar
-
-
