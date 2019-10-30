@@ -2,11 +2,12 @@ from __future__ import print_function
 
 import pandas as pd
 import geoip2.database
+
 import sys
 
 def import_csv():
     IPUID = pd.read_csv("ip_user.csv")
-    IPUID['user_id'] = IPUID['user_id'].str.extract('(\d+)', expand=False)
+    #IPUID['user_id'] = IPUID['user_id'].str.extract('(\d+)', expand=False)
     return IPUID
 
 def IP_CALC(IPUID):
@@ -34,13 +35,13 @@ def IP_CALC(IPUID):
             lon = 0
             lat = 0
 
-        IPUID.at[index, 'ip_country_iso'] = unicode(country)
-        IPUID.at[index, 'ip_country_name'] = unicode(name)
-        IPUID.at[index, 'ip_subdivision_name'] = unicode(subdiv)
-        IPUID.at[index, 'ip_city_name'] = unicode(city)
-        IPUID.at[index, 'ip_postal_code'] = unicode(postcode)
-        IPUID.at[index, 'ip_longitude'] = unicode(lon)
-        IPUID.at[index, 'ip_latitude'] = unicode(lat)
+        IPUID.at[index, 'ip_country_iso'] = country
+        IPUID.at[index, 'ip_country_name'] = name
+        IPUID.at[index, 'ip_subdivision_name'] = subdiv
+        IPUID.at[index, 'ip_city_name'] = city
+        IPUID.at[index, 'ip_postal_code'] = postcode
+        IPUID.at[index, 'ip_longitude'] = lon
+        IPUID.at[index, 'ip_latitude'] = lat
         
         printProgressBar(index, max_index)
         
